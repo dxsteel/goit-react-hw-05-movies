@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/168.43a89ec1.chunk.css","mappings":"AAAA,wBACE,YACF,CAEA,8BACE,YACF,CAEA,+BAEE,UAAW,CADX,iBAEF","sources":["components/Reviews/Reviews.module.css"],"sourcesContent":[".reviews {\n  padding: 50px;\n}\n\n.reviewsAuthor {\n  padding: 15px;\n}\n\n.reviewsContent {\n  padding: 30px 50px;\n  color: blue;\n}\n"],"names":[],"sourceRoot":""}
