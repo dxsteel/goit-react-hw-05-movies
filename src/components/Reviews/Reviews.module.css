@@ -1,0 +1,12 @@
+.reviews {
+  padding: 50px;
+}
+
+.reviewsAuthor {
+  padding: 15px;
+}
+
+.reviewsContent {
+  padding: 30px 50px;
+  color: blue;
+}

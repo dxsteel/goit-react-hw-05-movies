@@ -1,0 +1,19 @@
+.cast {
+  display: flex;
+  padding: 50px;
+}
+
+.castCard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: baseline;
+}
+.castCardPosition {
+  margin: 30px;
+  justify-content: center;
+}
+
+.castCardPositionImage {
+  padding-bottom: 15px;
+}

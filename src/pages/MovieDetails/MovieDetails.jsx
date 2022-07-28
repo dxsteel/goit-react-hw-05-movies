@@ -1,21 +1,26 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link, useLocation, Outlet, Navigate } from 'react-router-dom';
- import { ToastContainer, toast } from 'react-toastify';
+import {
+  useParams,
+  Link,
+  useLocation,
+  Outlet,
+  Navigate,
+} from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from 'services/movieApi';
-  import Loader from 'components/Loader';
-
-
+import Loader from 'components/Loader';
+import styles from './MoviesDetails.module.css';
 
 export const MoviesDetails = () => {
-    const [info, setInfo] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const location = useLocation();
-    const { movieId } = useParams();
-    const back = location?.state?.from ?? "/";
+  const [info, setInfo] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const location = useLocation();
+  const { movieId } = useParams();
+  const back = location?.state?.from ?? '/';
 
-    useEffect(() => {
+  useEffect(() => {
     const moviesDetails = async () => {
       setLoading(true);
       try {
@@ -28,28 +33,26 @@ export const MoviesDetails = () => {
         setLoading(false);
       }
     };
-  moviesDetails();
-    }, [movieId]);
-    
+    moviesDetails();
+  }, [movieId]);
 
-
-    return (
-        <div>
-            {error && <Navigate to="/" />}
-      <Link to={back}>
-        <button type="button">
+  return (
+    <div>
+      {error && <Navigate to="/" />}
+      <Link className={styles.button} to={back}>
+        <button className={styles.buttonStyles} type="button">
           Go back
         </button>
       </Link>
       {loading && <Loader />}
       {info && (
-        <div>
+        <div className={styles.card}>
           <img
             width="300px"
             src={'https://image.tmdb.org/t/p/w500' + info.poster_path}
             alt={info.original_title}
           />
-          <div>
+          <div className={styles.cardInfo}>
             <h1>
               {info.title} ({info.release_date.slice(0, 4)})
             </h1>
@@ -65,23 +68,34 @@ export const MoviesDetails = () => {
           </div>
         </div>
       )}
-      <hr />
-      <div>
-        <h3>Additional information</h3>
+      <div className={styles.additionalStyle}>
+        <h3 className={styles.additional}>Additional information</h3>
         <ul>
           <li>
-            <Link to="cast" state={{ from: back}}>Cast</Link>
+            <Link
+              className={styles.additionalCr}
+              to="cast"
+              state={{ from: back }}
+            >
+              Cast
+            </Link>
           </li>
           <li>
-            <Link to="reviews" state={{ from: back}}>Reviews</Link>
+            <Link
+              className={styles.additionalCr}
+              to="reviews"
+              state={{ from: back }}
+            >
+              Reviews
+            </Link>
           </li>
         </ul>
-        <hr />
-       <Outlet />
+
+        <Outlet />
         <ToastContainer />
       </div>
-        </div>
-    )
-}
+    </div>
+  );
+};
 
 export default MoviesDetails;

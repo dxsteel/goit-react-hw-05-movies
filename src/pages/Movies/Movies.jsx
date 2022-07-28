@@ -1,65 +1,85 @@
-
- import { toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
 import { BsSearch } from 'react-icons/bs';
-import Loader from "components/Loader";
+import Loader from 'components/Loader';
 import api from 'services/movieApi';
-import { useState, useEffect } from "react";
-import { useSearchParams, useLocation, Link } from "react-router-dom";
-import MoviesList from 'components/MovieList/MoviesList';
-
+import { useState, useEffect } from 'react';
+import { useSearchParams, useLocation, Link } from 'react-router-dom';
+import styles from '../Movies/Movies.module.css';
 
 export const Movies = () => {
-    const [searchMovies, setSearchMovies] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [searchParams, setSearchParams] = useSearchParams({});
-    const queryM = searchParams.get('query');
+  const [searchMovies, setSearchMovies] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams({});
+  const queryM = searchParams.get('query');
   const location = useLocation();
-  
-      const handleSubmit = e => {
-        e.preventDefault();
-        const formInput = e.currentTarget;
-        setSearchParams({ query: e.target.elements.query.value.toLowerCase().trim() });
-        formInput.reset();
-    };
 
-        useEffect(() => {
-      if (!queryM) return ;
-      {
-        const onSearchMovie = async () => {
-          setLoading(true);
-          try {
-            const { searchMovie } = await api.fetchMoviesQuery(queryM);
-            setSearchMovies(searchMovie);
-          } catch (error) {
-            toast.error(`The film you're lookink for can't be found`);
-          } finally {
-            setLoading(false);
-          }
-        };
-        onSearchMovie();
+  const handleSubmit = e => {
+    e.preventDefault();
+    const formInput = e.currentTarget;
+    setSearchParams({
+      query: e.target.elements.query.value.toLowerCase().trim(),
+    });
+    formInput.reset();
+  };
+
+  useEffect(() => {
+    if (!queryM) {
+      return;
+    }
+
+    const onSearchMovie = async () => {
+      setLoading(true);
+      try {
+        const searchMovie = await api.fetchMoviesQuery(queryM);
+        setSearchMovies(searchMovie);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
       }
-    }, [queryM]);
+    };
+    onSearchMovie();
+  }, [queryM]);
 
-
-
-
-
-    return (
-      <div>
-        <form onSubmit={handleSubmit}>
-          <input type="text" name="query" autoFocus />
-          <button type="submit">
+  return (
+    <div>
+      <form className={styles.formPosition} onSubmit={handleSubmit}>
+        <input
+          className={styles.formInput}
+          type="text"
+          name="query"
+          autoFocus
+        />
+        <button className={styles.buttonFind} type="submit">
           <span>
             <BsSearch />
           </span>
         </button>
-        </form>
-        <Link to={location?.state?.from ?? '/movie'}></Link>
-        {loading && <Loader />}
-        {searchMovies && <MoviesList videos={searchMovies}/>}  
-        </div>
-    )
-}
+      </form>
+      <div className={styles.search}>
+        <ul>
+          {searchMovies &&
+            searchMovies.results.length > 0 &&
+            searchMovies.results.map(movie => (
+              <li key={movie.id}>
+                <Link
+                  className={styles.searchItem}
+                  to={`/movies/${movie.id}`}
+                  state={{ from: location }}
+                >
+                  {movie.title}
+                </Link>
+              </li>
+            ))}
+          {loading && <Loader />}
+          {searchMovies && searchMovies.total_results === 0 && (
+            <p className={styles.searchAlert}>
+              The film you're looking for can't be found
+            </p>
+          )}
+        </ul>
+      </div>
+    </div>
+  );
+};
 
 export default Movies;

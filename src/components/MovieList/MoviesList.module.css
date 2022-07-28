@@ -1,0 +1,9 @@
+.itemText {
+  font-family: 'Akshar', sans-serif;
+  color: #000;
+  cursor: pointer;
+}
+
+.itemText:hover {
+  color: #ff6b6b;
+}

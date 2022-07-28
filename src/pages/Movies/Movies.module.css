@@ -1,0 +1,52 @@
+.formPosition {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.formInput {
+  background: none;
+  padding: 10px 50px;
+  font-size: 15px;
+  border: 2px solid #ff6b6b;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+.formInput:hover,
+.formInput:focus {
+  background-color: inherit;
+  border: 2px solid #ff6b6b;
+}
+
+.buttonFind {
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: medium;
+  background: none;
+  border: 2px solid tomato;
+  cursor: pointer;
+}
+
+.buttonFind:hover {
+  background-color: #ff6b6b;
+}
+
+.search {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  border: 3px solid rgb(0, 190, 171);
+}
+
+.searchItem {
+  font-family: 'Akshar', sans-serif;
+  color: #000;
+  cursor: pointer;
+}
+.searchItem:hover {
+  color: #ff6b6b;
+}
+.searchAlert {
+  padding: 20px;
+  color: blue;
+}
