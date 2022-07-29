@@ -1,0 +1,19 @@
+.navigation {
+  display: flex;
+  text-align: center;
+  justify-content: space-around;
+  padding: 50px;
+  background: #2e1437;
+}
+
+.navigation-link {
+  display: inline-block;
+  text-align: center;
+  font-weight: 500;
+  color: #73c8a9;
+  font-size: 30px;
+}
+
+.navigation--active {
+  color: #ff6b6b;
+}

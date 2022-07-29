@@ -1,15 +1,13 @@
 import { BsSearch } from 'react-icons/bs';
-import Loader from 'components/Loader';
 import api from 'services/movieApi';
 import { useState, useEffect } from 'react';
 import { useSearchParams, useLocation, Link } from 'react-router-dom';
 import styles from '../Movies/Movies.module.css';
 
 export const Movies = () => {
-  const [searchMovies, setSearchMovies] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [searchedMovies, setSearchedMovies] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams({});
-  const queryM = searchParams.get('query');
+  const queryMovie = searchParams.get('query');
   const location = useLocation();
 
   const handleSubmit = e => {
@@ -22,23 +20,13 @@ export const Movies = () => {
   };
 
   useEffect(() => {
-    if (!queryM) {
+    if (!queryMovie) {
       return;
     }
+    
+    queryMovie && api.fetchMoviesQuery(queryMovie).then(movie => setSearchedMovies(movie));
+  }, [queryMovie]);
 
-    const onSearchMovie = async () => {
-      setLoading(true);
-      try {
-        const searchMovie = await api.fetchMoviesQuery(queryM);
-        setSearchMovies(searchMovie);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    onSearchMovie();
-  }, [queryM]);
 
   return (
     <div>
@@ -57,9 +45,9 @@ export const Movies = () => {
       </form>
       <div className={styles.search}>
         <ul>
-          {searchMovies &&
-            searchMovies.results.length > 0 &&
-            searchMovies.results.map(movie => (
+          {searchedMovies &&
+            searchedMovies.results.length > 0 &&
+            searchedMovies.results.map(movie => (
               <li key={movie.id}>
                 <Link
                   className={styles.searchItem}
@@ -70,8 +58,7 @@ export const Movies = () => {
                 </Link>
               </li>
             ))}
-          {loading && <Loader />}
-          {searchMovies && searchMovies.total_results === 0 && (
+          {searchedMovies && searchedMovies.total_results === 0 && (
             <p className={styles.searchAlert}>
               The film you're looking for can't be found
             </p>

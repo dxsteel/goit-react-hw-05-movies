@@ -1,50 +1,25 @@
 import { useEffect, useState } from 'react';
-import {
-  useParams,
-  Link,
-  useLocation,
-  Outlet,
-  Navigate,
-} from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { useParams, Link, useLocation, Outlet } from 'react-router-dom';
 import api from 'services/movieApi';
-import Loader from 'components/Loader';
 import styles from './MoviesDetails.module.css';
 
 export const MoviesDetails = () => {
   const [info, setInfo] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const location = useLocation();
   const { movieId } = useParams();
   const back = location?.state?.from ?? '/';
 
   useEffect(() => {
-    const moviesDetails = async () => {
-      setLoading(true);
-      try {
-        const data = await api.fetchMoviesDetails(movieId);
-        setInfo(data);
-      } catch (error) {
-        setError(error.message);
-        toast.error(`Page not found`);
-      } finally {
-        setLoading(false);
-      }
-    };
-    moviesDetails();
+    api.fetchMoviesDetails(movieId).then(data => setInfo(data));
   }, [movieId]);
 
   return (
     <div>
-      {error && <Navigate to="/" />}
       <Link className={styles.button} to={back}>
         <button className={styles.buttonStyles} type="button">
           Go back
         </button>
       </Link>
-      {loading && <Loader />}
       {info && (
         <div className={styles.card}>
           <img
@@ -90,9 +65,7 @@ export const MoviesDetails = () => {
             </Link>
           </li>
         </ul>
-
         <Outlet />
-        <ToastContainer />
       </div>
     </div>
   );
