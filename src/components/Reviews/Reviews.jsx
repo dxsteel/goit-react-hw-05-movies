@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from 'services/movieApi';
-import styles from '../Reviews/Reviews.module.css';
+import styles from './Reviews.module.css';
 
-export const Reviews = () => {
+const Reviews = () => {
   const [reviews, setReviews] = useState(null);
   const { movieId } = useParams();
 
   useEffect(() => {
     api.fetchMoviesReviews(movieId).then(setReviews);
   }, [movieId]);
+  
   return reviews && reviews.total_results === 0 ? (
     <p className={styles.reviewsContent}>
       We don't have any reviwers for this movie!

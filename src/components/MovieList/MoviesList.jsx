@@ -1,8 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
-import styles from '../MovieList/MoviesList.module.css';
+import styles from './MoviesList.module.css';
 
-export const MoviesList = ({ videos }) => {
+const MoviesList = ({ videos }) => {
   const location = useLocation();
   return (
     <ul>

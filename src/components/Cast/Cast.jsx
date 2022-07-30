@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import noPhoto from '../../images/006-not-found.png';
 import api from 'services/movieApi';
-import styles from '../Cast/Cast.module.css';
+import styles from './Cast.module.css';
 
-export const Cast = () => {
+const Cast = () => {
   const [cast, setCast] = useState(null);
   const { movieId } = useParams();
 
@@ -32,6 +32,11 @@ export const Cast = () => {
               <p>Character: {item.character}</p>
             </li>
           ))}
+        {cast && cast.length === 0 && (
+    <p className={styles.castContent}>
+      We don't have any casts for this movie!
+    </p>
+  )} 
       </ul>
     </div>
   );

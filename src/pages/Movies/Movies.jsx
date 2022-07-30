@@ -2,9 +2,9 @@ import { BsSearch } from 'react-icons/bs';
 import api from 'services/movieApi';
 import { useState, useEffect } from 'react';
 import { useSearchParams, useLocation, Link } from 'react-router-dom';
-import styles from '../Movies/Movies.module.css';
+import styles from './Movies.module.css';
 
-export const Movies = () => {
+const Movies = () => {
   const [searchedMovies, setSearchedMovies] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams({});
   const queryMovie = searchParams.get('query');
@@ -46,7 +46,6 @@ export const Movies = () => {
       <div className={styles.search}>
         <ul>
           {searchedMovies &&
-            searchedMovies.results.length > 0 &&
             searchedMovies.results.map(movie => (
               <li key={movie.id}>
                 <Link

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import api from 'services/movieApi';
 import MoviesList from 'components/MovieList/MoviesList';
-import styles from '../Home/Home.module.css';
+import styles from './Home.module.css';
 
-export const Home = () => {
+const Home = () => {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {

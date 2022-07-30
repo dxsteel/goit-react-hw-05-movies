@@ -13,7 +13,7 @@ const Navigation = lazy(() => import('./components/Navigation'));
 
 
 
-export const App = () => {
+const App = () => {
   return (
     <div>
     <Navigation />
